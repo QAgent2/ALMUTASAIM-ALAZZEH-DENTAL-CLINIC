@@ -1,12 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom/client';
 import { 
   Menu, X, Phone, Mail, MapPin, Instagram, Facebook, Twitter, 
   Sparkles, Star, Shield, Zap, Smile, PlusSquare, 
   Award, GraduationCap, ShieldCheck, Quote, MessageSquare, ArrowUp
 } from 'lucide-react';
-
-// --- المكونات الداخلية مدمجة لضمان التشغيل ---
 
 const App: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -207,7 +206,7 @@ const App: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="bg-[#0d141b] p-12 border border-white/5 gold-glow">
+          <div className="bg-[#0d141b] p-12 border border-white/5">
             <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <input type="text" placeholder="الاسم الكامل" className="w-full bg-transparent border-b border-white/10 py-4 text-white focus:border-[#d4a373] outline-none transition-all placeholder:text-white/20" />
@@ -253,5 +252,12 @@ const App: React.FC = () => {
     </div>
   );
 };
+
+// تشغيل React DOM مباشرة من داخل الملف
+const rootElement = document.getElementById('root');
+if (rootElement) {
+  const root = ReactDOM.createRoot(rootElement);
+  root.render(<App />);
+}
 
 export default App;
