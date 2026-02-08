@@ -53,7 +53,7 @@ const Hero: React.FC = () => {
         <div className="flex flex-col md:flex-row items-center justify-center gap-10 opacity-0 animate-[fadeInUp_1.5s_ease-out_1.1s_forwards]">
           <button 
             onClick={() => scrollToSection('contact')}
-            className="group relative px-20 py-6 overflow-hidden bg-luxury text-black font-black text-xs tracking-[0.4em] uppercase hover:shadow-[0_0_80px_rgba(212,163,115,0.45)] transition-all duration-700 btn-hover-effect"
+            className="group relative px-20 py-6 overflow-hidden bg-[#d4a373] text-black font-black text-xs tracking-[0.4em] uppercase hover:shadow-[0_0_80px_rgba(212,163,115,0.6)] transition-all duration-700 btn-hover-effect border-none outline-none"
           >
             <span className="relative z-10">Private Inquiry</span>
           </button>

@@ -8,12 +8,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Luxury Font Pairing: Almarai for Arabic, Cinzel for English accents, Montserrat for modern feel -->
+    <!-- Luxury Font Pairing: Almarai and Cinzel -->
     <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Cinzel:wght@400;700;900&family=Montserrat:wght@100;300;400;700;900&display=swap" rel="stylesheet">
     <style>
       :root {
         --brand-dark: #050a0e;
-        --brand-accent: #d4a373; /* Copper/Rose Gold from logo */
+        --brand-accent: #d4a373; 
         --brand-accent-light: #e6be94;
         --brand-text: #f8f9fa;
       }
@@ -22,18 +22,19 @@
         background-color: var(--brand-dark);
         color: var(--brand-text);
         overflow-x: hidden;
-        cursor: none; /* Hide default cursor */
+        cursor: none; 
       }
-      /* Custom Professional Cursor Styles */
+      
+      /* Professional Custom Cursor */
       #cursor-dot {
-        width: 6px;
-        height: 6px;
+        width: 8px;
+        height: 8px;
         background-color: var(--brand-accent);
         border-radius: 50%;
         position: fixed;
         pointer-events: none;
-        z-index: 9999;
-        transition: transform 0.1s ease;
+        z-index: 10000;
+        transform: translate(-50%, -50%);
       }
       #cursor-outline {
         width: 40px;
@@ -42,74 +43,40 @@
         border-radius: 50%;
         position: fixed;
         pointer-events: none;
-        z-index: 9998;
-        transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), width 0.3s, height 0.3s, border 0.3s;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
       }
       .cursor-hover #cursor-outline {
-        transform: translate(-50%, -50%) scale(1.5);
-        background-color: rgba(212, 163, 115, 0.1);
-        border-color: white;
+        width: 60px;
+        height: 60px;
+        background-color: rgba(212, 163, 115, 0.15);
+        border-color: #fff;
       }
 
-      .font-luxury-en {
-        font-family: 'Cinzel', serif;
-      }
-      .font-modern {
-        font-family: 'Montserrat', sans-serif;
-      }
-      ::-webkit-scrollbar {
-        width: 4px;
-      }
-      ::-webkit-scrollbar-track {
-        background: var(--brand-dark);
-      }
-      ::-webkit-scrollbar-thumb {
-        background: var(--brand-accent);
-      }
-      .luxury-gradient {
-        background: linear-gradient(135deg, #d4a373 0%, #a67c52 100%);
-      }
-      .text-luxury {
-        color: var(--brand-accent);
-      }
-      .border-luxury {
-        border-color: var(--brand-accent);
-      }
-      .bg-glass {
-        background: rgba(13, 20, 27, 0.7);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-      }
-      @keyframes slow-zoom {
-        0% { transform: scale(1); }
-        100% { transform: scale(1.1); }
-      }
-      .hero-zoom {
-        animation: slow-zoom 30s infinite alternate ease-in-out;
-      }
-      .gold-glow {
-        box-shadow: 0 0 50px rgba(212, 163, 115, 0.1);
-      }
+      .font-luxury-en { font-family: 'Cinzel', serif; }
+      .font-modern { font-family: 'Montserrat', sans-serif; }
+      
+      ::-webkit-scrollbar { width: 4px; }
+      ::-webkit-scrollbar-track { background: var(--brand-dark); }
+      ::-webkit-scrollbar-thumb { background: var(--brand-accent); }
+      
+      .gold-glow { box-shadow: 0 0 50px rgba(212, 163, 115, 0.1); }
+      
       .btn-hover-effect {
         position: relative;
         overflow: hidden;
-        transition: all 0.5s ease;
       }
-      .btn-hover-effect::before {
+      .btn-hover-effect::after {
         content: '';
         position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-        transition: all 0.5s ease;
+        top: 0; left: -100%;
+        width: 100%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: 0.6s;
       }
-      .btn-hover-effect:hover::before {
-        left: 100%;
-      }
-      
-      /* Disable custom cursor on mobile */
+      .btn-hover-effect:hover::after { left: 100%; }
+
       @media (max-width: 768px) {
         body { cursor: auto; }
         #cursor-dot, #cursor-outline { display: none; }
@@ -130,23 +97,41 @@
     <div id="cursor-dot"></div>
     <div id="cursor-outline"></div>
     <div id="root"></div>
+
+    <!-- استدعاء ملف الدخول الرئيسي للتطبيق -->
+    <script type="module" src="./index.tsx"></script>
+
     <script>
       const dot = document.getElementById('cursor-dot');
       const outline = document.getElementById('cursor-outline');
       
+      let mouseX = 0;
+      let mouseY = 0;
+      let outlineX = 0;
+      let outlineY = 0;
+
       window.addEventListener('mousemove', (e) => {
-        const posX = e.clientX;
-        const posY = e.clientY;
-        
-        dot.style.transform = `translate(${posX - 3}px, ${posY - 3}px)`;
-        // Smooth follow for outline
-        outline.animate({
-          left: `${posX - 20}px`,
-          top: `${posY - 20}px`
-        }, { duration: 500, fill: "forwards" });
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+        dot.style.left = mouseX + 'px';
+        dot.style.top = mouseY + 'px';
       });
 
-      // Hover effects
+      // حركة ناعمة للدائرة الخارجية
+      function animate() {
+        let distX = mouseX - outlineX;
+        let distY = mouseY - outlineY;
+        
+        outlineX = outlineX + (distX * 0.15);
+        outlineY = outlineY + (distY * 0.15);
+        
+        outline.style.left = outlineX + 'px';
+        outline.style.top = outlineY + 'px';
+        
+        requestAnimationFrame(animate);
+      }
+      animate();
+
       document.addEventListener('mouseover', (e) => {
         if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || e.target.closest('button') || e.target.closest('a')) {
           document.body.classList.add('cursor-hover');
