@@ -19,7 +19,6 @@ const Hero: React.FC = () => {
 
   return (
     <section id="hero" className="relative h-screen w-full overflow-hidden flex items-center justify-center bg-[#050a0e]">
-      {/* Cinematic Background Layer */}
       <div className="absolute inset-0 z-0">
         <img 
           src="https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&q=100&w=2600" 
@@ -30,7 +29,6 @@ const Hero: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-[#050a0e] via-transparent to-transparent opacity-80"></div>
       </div>
 
-      {/* Central Brand Narrative */}
       <div className="relative z-10 text-center px-6 max-w-7xl">
         <div className="mb-14 flex flex-col items-center opacity-0 animate-[fadeIn_2s_ease-out_forwards]">
             <div className="flex items-center gap-8 mb-6">
@@ -41,7 +39,7 @@ const Hero: React.FC = () => {
         </div>
         
         <h1 className="text-5xl md:text-9xl font-black mb-12 text-white leading-[1.1] tracking-tight opacity-0 animate-[fadeInUp_1.5s_ease-out_0.5s_forwards]">
-          نحت <span className="text-luxury font-luxury-en italic font-normal">الكمال</span> <br />
+          نحت <span className="text-[#d4a373] font-luxury-en italic font-normal">الكمال</span> <br />
           <span className="text-3xl md:text-5xl font-light opacity-60 block mt-6 tracking-[0.3em] font-modern uppercase">The Architecture of Smiles</span>
         </h1>
         
@@ -53,7 +51,7 @@ const Hero: React.FC = () => {
         <div className="flex flex-col md:flex-row items-center justify-center gap-10 opacity-0 animate-[fadeInUp_1.5s_ease-out_1.1s_forwards]">
           <button 
             onClick={() => scrollToSection('contact')}
-            className="group relative px-20 py-6 overflow-hidden bg-[#d4a373] text-black font-black text-xs tracking-[0.4em] uppercase hover:shadow-[0_0_80px_rgba(212,163,115,0.6)] transition-all duration-700 btn-hover-effect border-none outline-none"
+            className="group relative px-20 py-6 overflow-hidden bg-[#d4a373] text-black font-black text-xs tracking-[0.4em] uppercase hover:shadow-[0_0_80px_rgba(212,163,115,0.6)] transition-all duration-700 border-none outline-none"
           >
             <span className="relative z-10">Private Inquiry</span>
           </button>
@@ -65,17 +63,6 @@ const Hero: React.FC = () => {
           </button>
         </div>
       </div>
-
-      <style>{`
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(60px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-      `}</style>
     </section>
   );
 };
