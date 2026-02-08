@@ -2,80 +2,15 @@
 import React, { useState, useEffect } from 'react';
 import { 
   Menu, X, Phone, Mail, MapPin, Instagram, Facebook, Twitter, 
-  ArrowUp, Sparkles, Star, Shield, Zap, Smile, PlusSquare, 
-  Award, GraduationCap, Microscope, Heart, ShieldCheck, Quote,
-  CheckCircle2, MessageSquare
+  Sparkles, Star, Shield, Zap, Smile, PlusSquare, 
+  Award, GraduationCap, ShieldCheck, Quote, MessageSquare, ArrowUp
 } from 'lucide-react';
 
-// --- مكون الهيدر ---
-const Header = ({ isScrolled }: { isScrolled: boolean }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const navLinks = [
-    { name: 'الرئيسية', id: 'hero' },
-    { name: 'عن العيادة', id: 'about' },
-    { name: 'الخدمات', id: 'services' },
-    { name: 'الدكتور', id: 'doctor' },
-    { name: 'تواصل معنا', id: 'contact' },
-  ];
+// --- المكونات الداخلية مدمجة لضمان التشغيل ---
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      window.scrollTo({
-        top: id === 'hero' ? 0 : element.offsetTop - 80,
-        behavior: 'smooth'
-      });
-    }
-    setIsMenuOpen(false);
-  };
-
-  return (
-    <nav className={`fixed w-full z-50 transition-all duration-1000 ${isScrolled ? 'bg-[#050a0e]/95 backdrop-blur-2xl py-3 border-b border-white/5' : 'bg-transparent py-8'}`}>
-      <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
-        <div onClick={() => scrollToSection('hero')} className="flex items-center gap-3 cursor-pointer group">
-          <div className="w-10 h-10 border border-[#d4a373] flex items-center justify-center rotate-45 group-hover:rotate-0 transition-all duration-700">
-            <span className="text-[#d4a373] text-xl font-luxury-en -rotate-45 group-hover:rotate-0 transition-all">A</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-white font-bold tracking-widest text-sm md:text-lg">ALMUTASAIM ALAZZEH</span>
-            <span className="text-[#d4a373] text-[9px] tracking-[0.4em] uppercase font-bold">Dental Clinic</span>
-          </div>
-        </div>
-
-        <div className="hidden lg:flex items-center space-x-10 space-x-reverse">
-          {navLinks.map((link) => (
-            <button key={link.id} onClick={() => scrollToSection(link.id)} className="text-[11px] font-bold text-white/70 hover:text-[#d4a373] transition-colors uppercase tracking-widest">
-              {link.name}
-            </button>
-          ))}
-          <button onClick={() => scrollToSection('contact')} className="px-8 py-3 bg-[#d4a373] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all">
-            Book Appointment
-          </button>
-        </div>
-
-        <button className="lg:hidden text-[#d4a373]" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
-      </div>
-      
-      {/* Mobile Menu */}
-      <div className={`lg:hidden fixed inset-0 bg-[#050a0e] z-40 transition-transform duration-700 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="flex flex-col items-center justify-center h-full space-y-10">
-          {navLinks.map((link) => (
-            <button key={link.id} onClick={() => scrollToSection(link.id)} className="text-3xl font-bold text-white hover:text-[#d4a373]">
-              {link.name}
-            </button>
-          ))}
-          <button onClick={() => scrollToSection('contact')} className="px-12 py-4 bg-[#d4a373] text-black font-black uppercase">Book Now</button>
-        </div>
-      </div>
-    </nav>
-  );
-};
-
-// --- المكون الرئيسي ---
 const App: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50);
@@ -83,33 +18,82 @@ const App: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const scrollToSection = (id: string) => {
+    const element = document.getElementById(id);
+    if (element) {
+      const offset = 80;
+      window.scrollTo({
+        top: id === 'hero' ? 0 : element.offsetTop - offset,
+        behavior: 'smooth'
+      });
+    }
+    setIsMenuOpen(false);
+  };
+
   return (
     <div className="min-h-screen selection:bg-[#d4a373] selection:text-black bg-[#050a0e]">
-      <Header isScrolled={isScrolled} />
       
+      {/* Navigation */}
+      <nav className={`fixed w-full z-50 transition-all duration-1000 ${isScrolled ? 'bg-[#050a0e]/95 backdrop-blur-2xl py-3 border-b border-white/5 shadow-2xl' : 'bg-transparent py-8'}`}>
+        <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
+          <div onClick={() => scrollToSection('hero')} className="flex items-center gap-3 cursor-pointer group">
+            <div className="w-10 h-10 border border-[#d4a373] flex items-center justify-center rotate-45 group-hover:rotate-0 transition-all duration-700">
+              <span className="text-[#d4a373] text-xl font-luxury-en -rotate-45 group-hover:rotate-0 transition-all">A</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-white font-bold tracking-[0.2em] text-sm md:text-lg uppercase">ALMUTASAIM ALAZZEH</span>
+              <span className="text-[#d4a373] text-[9px] tracking-[0.5em] uppercase font-bold font-luxury-en">Dental Clinic</span>
+            </div>
+          </div>
+
+          <div className="hidden lg:flex items-center space-x-10 space-x-reverse">
+            {['الرئيسية', 'عن العيادة', 'الخدمات', 'الدكتور', 'تواصل معنا'].map((item, idx) => (
+              <button 
+                key={idx} 
+                onClick={() => scrollToSection(['hero', 'about', 'services', 'doctor', 'contact'][idx])}
+                className="text-[11px] font-bold text-white/60 hover:text-[#d4a373] transition-colors uppercase tracking-widest"
+              >
+                {item}
+              </button>
+            ))}
+            <button onClick={() => scrollToSection('contact')} className="px-8 py-3 bg-[#d4a373] text-black text-[10px] font-black uppercase tracking-widest hover:bg-white transition-all">
+              Private Inquiry
+            </button>
+          </div>
+
+          <button className="lg:hidden text-[#d4a373]" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
+      </nav>
+
       {/* Hero Section */}
       <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img src="https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&q=100&w=2600" className="w-full h-full object-cover brightness-[0.2]" alt="Luxury Clinic" />
+          <img 
+            src="https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&q=100&w=2600" 
+            className="w-full h-full object-cover brightness-[0.2] scale-105 animate-[pulse_10s_infinite]" 
+            alt="Ultra Luxury" 
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050a0e] via-transparent to-transparent"></div>
         </div>
         <div className="relative z-10 text-center px-6">
-          <div className="flex items-center justify-center gap-4 mb-8 opacity-0 animate-[fadeIn_2s_forwards]">
+          <div className="flex items-center justify-center gap-4 mb-8">
             <div className="h-[1px] w-12 bg-[#d4a373]"></div>
             <span className="text-[#d4a373] tracking-[0.5em] text-xs font-black uppercase font-luxury-en">Art . Love . Trust</span>
             <div className="h-[1px] w-12 bg-[#d4a373]"></div>
           </div>
-          <h1 className="text-6xl md:text-9xl font-black text-white mb-10 leading-tight tracking-tighter opacity-0 animate-[fadeInUp_1.5s_0.5s_forwards]">
+          <h1 className="text-6xl md:text-9xl font-black text-white mb-10 leading-tight tracking-tighter">
             نحت <span className="text-[#d4a373] italic font-luxury-en font-normal">الكمال</span>
           </h1>
-          <p className="text-white/50 text-xl md:text-3xl max-w-4xl mx-auto mb-16 font-light opacity-0 animate-[fadeInUp_1.5s_0.8s_forwards]">
+          <p className="text-white/50 text-xl md:text-3xl max-w-4xl mx-auto mb-16 font-light">
             في عيادة الدكتور المعتصم العزه، نصنع ابتسامة تعكس جوهرك الحقيقي بلمسات فنية وتقنيات عالمية.
           </p>
-          <div className="flex flex-col md:flex-row items-center justify-center gap-8 opacity-0 animate-[fadeInUp_1.5s_1.1s_forwards]">
-            <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} className="px-16 py-6 bg-[#d4a373] text-black font-black uppercase tracking-widest hover:shadow-[0_0_50px_rgba(212,163,115,0.4)] transition-all">
-              Private Inquiry
+          <div className="flex flex-col md:flex-row items-center justify-center gap-8">
+            <button onClick={() => scrollToSection('contact')} className="px-16 py-6 bg-[#d4a373] text-black font-black uppercase tracking-widest hover:shadow-[0_0_80px_rgba(212,163,115,0.4)] transition-all">
+              Book Appointment
             </button>
-            <button onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })} className="px-16 py-6 border border-white/20 text-white font-bold uppercase tracking-widest hover:bg-white/5 transition-all">
+            <button onClick={() => scrollToSection('about')} className="px-16 py-6 border border-white/20 text-white font-bold uppercase tracking-widest hover:bg-white/5 transition-all">
               Our Philosophy
             </button>
           </div>
@@ -121,7 +105,7 @@ const App: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
           <div className="relative group">
             <div className="absolute -inset-4 border border-[#d4a373]/30 translate-x-8 translate-y-8 -z-10 group-hover:translate-x-4 group-hover:translate-y-4 transition-all duration-1000"></div>
-            <img src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&q=100&w=1400" className="w-full h-[600px] object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Clinical Excellence" />
+            <img src="https://images.unsplash.com/photo-1598256989800-fe5f95da9787?auto=format&fit=crop&q=100&w=1400" className="w-full h-[600px] object-cover grayscale group-hover:grayscale-0 transition-all duration-1000" alt="Excellence" />
           </div>
           <div className="space-y-12">
             <h2 className="text-[#d4a373] tracking-[0.5em] uppercase text-xs font-black">The Sanctuary</h2>
@@ -130,12 +114,12 @@ const App: React.FC = () => {
               نحن لا نعالج الأسنان فحسب، بل نعيد تصميم ملامح الثقة. في عيادتنا، يلتقي العلم بالفن لخلق تجربة علاجية ملكية تضمن لك الخصوصية والدقة المتناهية.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-              <div>
-                <h4 className="text-white font-bold text-xl mb-4 flex items-center gap-3"><Zap className="text-[#d4a373]" /> دقة رقمية</h4>
+              <div className="space-y-4">
+                <h4 className="text-white font-bold text-xl flex items-center gap-3"><Zap className="text-[#d4a373]" /> دقة رقمية</h4>
                 <p className="text-white/40 text-sm">استخدام أحدث أنظمة التصميم الرقمي ثلاثي الأبعاد لضمان نتائج مثالية.</p>
               </div>
-              <div>
-                <h4 className="text-white font-bold text-xl mb-4 flex items-center gap-3"><ShieldCheck className="text-[#d4a373]" /> أمان مطلق</h4>
+              <div className="space-y-4">
+                <h4 className="text-white font-bold text-xl flex items-center gap-3"><ShieldCheck className="text-[#d4a373]" /> أمان مطلق</h4>
                 <p className="text-white/40 text-sm">بروتوكولات تعقيم عالمية لضمان سلامة كل مريض في بيئة نقية.</p>
               </div>
             </div>
@@ -174,7 +158,7 @@ const App: React.FC = () => {
              <div className="absolute -inset-10 border border-[#d4a373]/10 -z-10 rounded-full scale-110 animate-pulse"></div>
              <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=100&w=1200" className="w-full grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl" alt="Dr. Almutasaim" />
              <div className="absolute bottom-10 right-0 bg-[#050a0e] p-8 border-r-4 border-[#d4a373]">
-                <h4 className="text-white font-black text-2xl">Dr. Almutasaim Alazzeh</h4>
+                <h4 className="text-white font-black text-2xl tracking-tighter">Dr. Almutasaim Alazzeh</h4>
                 <p className="text-[#d4a373] text-[10px] uppercase tracking-widest font-bold">Clinical Director</p>
              </div>
           </div>
@@ -191,13 +175,13 @@ const App: React.FC = () => {
                   <span className="text-white/40 text-xs uppercase tracking-widest font-bold">Implant Expert</span>
                </div>
             </div>
-            <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} className="px-12 py-5 bg-[#d4a373] text-black font-black uppercase text-xs tracking-widest">Consultation</button>
+            <button onClick={() => scrollToSection('contact')} className="px-12 py-5 bg-[#d4a373] text-black font-black uppercase text-xs tracking-widest hover:bg-white transition-all">Consultation</button>
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-32 bg-[#0a0f14]">
+      <section id="contact" className="py-32 bg-[#0a0f14] border-t border-white/5">
         <div className="container mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-24">
           <div className="space-y-12">
             <h2 className="text-[#d4a373] tracking-[0.5em] uppercase text-xs font-black">Concierge</h2>
@@ -208,8 +192,8 @@ const App: React.FC = () => {
                   <Phone size={24} />
                 </div>
                 <div>
-                  <p className="text-white/40 text-[10px] uppercase font-bold tracking-widest">Call Us</p>
                   <p className="text-white font-bold text-xl">+962 78 073 5083</p>
+                  <p className="text-white/40 text-[10px] uppercase font-bold tracking-widest">Call or WhatsApp</p>
                 </div>
               </div>
               <div className="flex items-center gap-6 group cursor-pointer">
@@ -217,25 +201,20 @@ const App: React.FC = () => {
                   <MapPin size={24} />
                 </div>
                 <div>
-                  <p className="text-white/40 text-[10px] uppercase font-bold tracking-widest">Visit Us</p>
                   <p className="text-white font-bold text-xl">عمّان، الأردن</p>
+                  <p className="text-white/40 text-[10px] uppercase font-bold tracking-widest">Global Medical Center</p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="bg-[#0d141b] p-12 border border-white/5">
-            <form className="space-y-8">
+          <div className="bg-[#0d141b] p-12 border border-white/5 gold-glow">
+            <form className="space-y-8" onSubmit={(e) => e.preventDefault()}>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <input type="text" placeholder="الاسم الكامل" className="w-full bg-transparent border-b border-white/10 py-4 text-white focus:border-[#d4a373] outline-none transition-all" />
-                <input type="tel" placeholder="رقم الهاتف" className="w-full bg-transparent border-b border-white/10 py-4 text-white focus:border-[#d4a373] outline-none transition-all" />
+                <input type="text" placeholder="الاسم الكامل" className="w-full bg-transparent border-b border-white/10 py-4 text-white focus:border-[#d4a373] outline-none transition-all placeholder:text-white/20" />
+                <input type="tel" placeholder="رقم الهاتف" className="w-full bg-transparent border-b border-white/10 py-4 text-white focus:border-[#d4a373] outline-none transition-all placeholder:text-white/20" />
               </div>
-              <select className="w-full bg-transparent border-b border-white/10 py-4 text-white/50 focus:border-[#d4a373] outline-none transition-all appearance-none">
-                <option>نوع الخدمة المطلوبة</option>
-                <option>تجميل أسنان</option>
-                <option>زراعة أسنان</option>
-              </select>
-              <textarea placeholder="رسالتك الخاصة" rows={4} className="w-full bg-transparent border-b border-white/10 py-4 text-white focus:border-[#d4a373] outline-none transition-all"></textarea>
-              <button className="w-full py-6 bg-[#d4a373] text-black font-black uppercase tracking-widest hover:bg-white transition-all">إرسال الطلب</button>
+              <textarea placeholder="رسالتك الخاصة" rows={4} className="w-full bg-transparent border-b border-white/10 py-4 text-white focus:border-[#d4a373] outline-none transition-all placeholder:text-white/20"></textarea>
+              <button className="w-full py-6 bg-[#d4a373] text-black font-black uppercase tracking-widest hover:bg-white transition-all shadow-xl">إرسال الطلب</button>
             </form>
           </div>
         </div>
@@ -248,7 +227,7 @@ const App: React.FC = () => {
             <div className="w-16 h-16 border-2 border-[#d4a373] flex items-center justify-center rotate-45">
               <span className="text-[#d4a373] text-3xl font-luxury-en -rotate-45">A</span>
             </div>
-            <h4 className="text-white font-black text-2xl tracking-[0.3em]">ALMUTASAIM ALAZZEH</h4>
+            <h4 className="text-white font-black text-2xl tracking-[0.3em] uppercase">ALMUTASAIM ALAZZEH</h4>
             <div className="flex items-center gap-8 text-white/30">
               <Instagram className="hover:text-[#d4a373] cursor-pointer" />
               <Facebook className="hover:text-[#d4a373] cursor-pointer" />
@@ -259,16 +238,18 @@ const App: React.FC = () => {
         </div>
       </footer>
 
-      <style>{`
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(40px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-      `}</style>
+      {/* Mobile Sidebar */}
+      <div className={`lg:hidden fixed inset-0 bg-[#050a0e] z-[60] transition-transform duration-700 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="flex flex-col items-center justify-center h-full space-y-10">
+          <button className="absolute top-10 left-10 text-[#d4a373]" onClick={() => setIsMenuOpen(false)}><X size={40} /></button>
+          {['الرئيسية', 'عن العيادة', 'الخدمات', 'الدكتور', 'تواصل معنا'].map((item, idx) => (
+            <button key={idx} onClick={() => scrollToSection(['hero', 'about', 'services', 'doctor', 'contact'][idx])} className="text-3xl font-bold text-white hover:text-[#d4a373] uppercase tracking-tighter transition-all">
+              {item}
+            </button>
+          ))}
+          <button onClick={() => scrollToSection('contact')} className="px-12 py-4 bg-[#d4a373] text-black font-black uppercase shadow-2xl">Book Now</button>
+        </div>
+      </div>
     </div>
   );
 };
