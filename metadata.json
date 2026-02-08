@@ -1,0 +1,7 @@
+{
+  "name": "ALMUTASAIM ALAZZEH DENTAL CLINIC",
+  "description": "An ultra-luxury, VIP dental clinic website based in Amman, Jordan, emphasizing precision, art, and trust.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
